@@ -16,8 +16,8 @@ public class ClienteSocket {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-       FileTags t = new FileTags("C:\\Users\\Chack\\Music\\Musica\\03 - This Picture.mp3");
-       t.getFileTags();
+       //FileTags t = new FileTags("C:\\Users\\Chack\\Music\\Musica\\03 - This Picture.mp3");
+      // t.getFileTags();
        
     }
     
