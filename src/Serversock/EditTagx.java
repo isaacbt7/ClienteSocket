@@ -8,6 +8,8 @@ package Serversock;
 import java.io.File;
 import Serversock.Mp3Object;
 import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -143,7 +145,10 @@ public class EditTagx extends javax.swing.JFrame {
 
     private void BexaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BexaActionPerformed
         // TODO add your handling code here:
+        try {
         JFileChooser chooser = new JFileChooser();
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("MP3 Audio","mp3"));
+        chooser.setAcceptAllFileFilterUsed(false);
         chooser.showOpenDialog(this);
         archivo = chooser.getSelectedFile();
         String path = archivo.getAbsolutePath();
@@ -153,6 +158,9 @@ public class EditTagx extends javax.swing.JFrame {
         Ttitulo.setText(ft.getFileTags().getTitle());
         Tanime.setText("???");
         noMostrar(true);
+        } catch (NullPointerException e) {
+            System.out.println("No se selecciono un archivo. El archivo es "+e.getMessage());
+        }       
     }//GEN-LAST:event_BexaActionPerformed
 
     public void noMostrar(boolean valor){
