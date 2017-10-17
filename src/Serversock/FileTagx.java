@@ -23,6 +23,7 @@ public class FileTagx {
 
     public FileTagx(String pathx) {
         try {
+            System.out.println("path "+pathx);
             mp3s = new MP3(pathx);
         } catch (IOException ex) {
             Logger.getLogger(FileTagx.class.getName()).log(Level.SEVERE, null, ex);
@@ -32,9 +33,16 @@ public class FileTagx {
 
     public Mp3Object getFileTags() {
         Mp3Object tagsObject = new Mp3Object();
-        tagsObject.setArtist(mp3s.getID3v1Tag().getArtist());
-        tagsObject.setTitle(mp3s.getID3v1Tag().getTitle());
-        System.out.println("obteniendo datos getfiletags");
+        try {
+            tagsObject.setArtist(mp3s.getID3v1Tag().getArtist());
+        } catch (NullPointerException e) {
+            tagsObject.setArtist("");
+        }
+        try {
+            tagsObject.setTitle(mp3s.getID3v1Tag().getTitle());
+        } catch (NullPointerException e) {
+            tagsObject.setTitle("");
+        }
         return tagsObject;
     }
 
