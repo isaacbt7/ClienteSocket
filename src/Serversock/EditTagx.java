@@ -7,6 +7,9 @@ package Serversock;
 
 import java.io.File;
 import Serversock.Mp3Object;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -16,13 +19,16 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Josue Bonilla
  */
 public class EditTagx extends javax.swing.JFrame {
+
     File archivo = null;
+    String path = "";
+
     /**
      * Creates new form FileTagx
      */
     public EditTagx() {
         initComponents();
-        noMostrar(false);   
+        noMostrar(false);
     }
 
     /**
@@ -52,9 +58,9 @@ public class EditTagx extends javax.swing.JFrame {
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lrellenar.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lrellenar.setText("Rellenar ");
+        lrellenar.setText("Editar");
         lrellenar.setAutoscrolls(true);
-        getContentPane().add(lrellenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 91, -1, 27));
+        getContentPane().add(lrellenar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, -1, 27));
 
         lartista.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lartista.setText("Artista: ");
@@ -83,6 +89,7 @@ public class EditTagx extends javax.swing.JFrame {
         getContentPane().add(Ttitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 189, 300, 27));
 
         Tanime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        Tanime.setToolTipText("Opcional");
         getContentPane().add(Tanime, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 237, 300, 27));
 
         Jguardar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
@@ -136,7 +143,7 @@ public class EditTagx extends javax.swing.JFrame {
         Ttitulo.setText("");
         Tanime.setText("");
         Texa.setText("");
-        noMostrar(false); 
+        noMostrar(false);
     }//GEN-LAST:event_JborrarActionPerformed
 
     private void TtituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TtituloActionPerformed
@@ -145,25 +152,33 @@ public class EditTagx extends javax.swing.JFrame {
 
     private void BexaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BexaActionPerformed
         // TODO add your handling code here:
-        try {
-        JFileChooser chooser = new JFileChooser();
-        chooser.addChoosableFileFilter(new FileNameExtensionFilter("MP3 Audio","mp3"));
+        JFileChooser chooser = null;
+        chooser = new JFileChooser();
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("MP3 Audio", "mp3"));
         chooser.setAcceptAllFileFilterUsed(false);
-        chooser.showOpenDialog(this);
-        archivo = chooser.getSelectedFile();
-        String path = archivo.getAbsolutePath();
-        Texa.setText(path);
-        FileTagx ft = new FileTagx(path); 
-        Tartista.setText(ft.getFileTags().getArtist());
-        Ttitulo.setText(ft.getFileTags().getTitle());
-        Tanime.setText("???");
-        noMostrar(true);
+        if (!path.equalsIgnoreCase("")) {
+            System.out.println("parentpath " + new File(path).getParentFile());
+            chooser.setCurrentDirectory(archivo.getParentFile());
+        }
+     chooser.showOpenDialog(this);
+        try {
+            archivo = chooser.getSelectedFile();
+            path = archivo.getAbsolutePath();
+            Texa.setText(path);
         } catch (NullPointerException e) {
-            System.out.println("No se selecciono un archivo. El archivo es "+e.getMessage());
-        }       
+            System.out.println("No se selecciono un archivo. El archivo es " + e.getMessage());
+        }
+        if (!path.equalsIgnoreCase("")) {
+            FileTagx ft = new FileTagx(path);
+            Tartista.setText(ft.getFileTags().getArtist());
+            Ttitulo.setText(ft.getFileTags().getTitle());
+            Tanime.setText("???");
+            noMostrar(true);
+        }
+
     }//GEN-LAST:event_BexaActionPerformed
 
-    public void noMostrar(boolean valor){
+    public void noMostrar(boolean valor) {
         Tartista.setEnabled(valor);
         Ttitulo.setEnabled(valor);
         Tanime.setEnabled(valor);
@@ -174,12 +189,13 @@ public class EditTagx extends javax.swing.JFrame {
         lcancion.setEnabled(valor);
         lanime.setEnabled(valor);
         //ancho*alto
-        if(valor){
-            this.setSize(455,365);
-        }else{
-            this.setSize(455,120);
-        }  
+        if (valor) {
+            this.setSize(455, 365);
+        } else {
+            this.setSize(455, 120);
+        }
     }
+
     /**
      * @param args the command line arguments
      */
