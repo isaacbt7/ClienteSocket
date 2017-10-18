@@ -20,8 +20,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author Josue Bonilla
  */
 public class EditTagx extends javax.swing.JFrame {
-
+    // Esta variable se usa en dos metodos diferentes por esa razon en global
     File archivo = null;
+    // Esta variable se usa en el boton examinar y es global para evitar cambiar el ultimo valor dado.
     String path = "";
 
     /**
@@ -29,6 +30,7 @@ public class EditTagx extends javax.swing.JFrame {
      */
     public EditTagx() {
         initComponents();
+        //primera accion que se ejecuta en la ventana
         noMostrar(false);
     }
 
@@ -130,11 +132,13 @@ public class EditTagx extends javax.swing.JFrame {
     private void JguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JguardarActionPerformed
         // TODO add your handling code here:
         Mp3Object tags = new Mp3Object();
+        //si el campo artista esta vacio se muestra un mensaje
         if(!Tartista.getText().trim().equalsIgnoreCase("")){
             tags.setArtist(Tartista.getText().trim());
         }else{
             JOptionPane.showMessageDialog(null, "El campo Artista esta vacio","Aviso" ,JOptionPane.WARNING_MESSAGE);
         }
+        //si el campo titutlo esta vacio se muestra un mensaje
         if(!Ttitulo.getText().trim().equalsIgnoreCase("")){
             tags.setTitle(Ttitulo.getText().trim());
         }else{
@@ -147,7 +151,7 @@ public class EditTagx extends javax.swing.JFrame {
         }else{    
             tags.setAnime(Tanime.getText().trim());
         }
-        
+        //si el campo artista y titulo estan vacios no se envia nada.
         if(!Tartista.getText().trim().equalsIgnoreCase("")&&!Ttitulo.getText().trim().equalsIgnoreCase("")){
              tags.setMp3Files(archivo);
             FileTagx ft = new FileTagx();
@@ -157,7 +161,7 @@ public class EditTagx extends javax.swing.JFrame {
     }//GEN-LAST:event_JguardarActionPerformed
 
     private void JborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JborrarActionPerformed
-        // TODO add your handling code here:
+        // borra los siguientes campos y los deshabilita.
         Tartista.setText("");
         Ttitulo.setText("");
         Tanime.setText("");
@@ -170,24 +174,24 @@ public class EditTagx extends javax.swing.JFrame {
     }//GEN-LAST:event_TtituloActionPerformed
 
     private void BexaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BexaActionPerformed
-        // TODO add your handling code here:
-        JFileChooser chooser = null;
-        chooser = new JFileChooser();
-        chooser.addChoosableFileFilter(new FileNameExtensionFilter("MP3 Audio", "mp3"));
-        chooser.setAcceptAllFileFilterUsed(false);
+        JFileChooser chooser = null;//creando variable de tipo JfileChooser
+        chooser = new JFileChooser();//creando objeto de tipo jFileChooser
+        chooser.setAcceptAllFileFilterUsed(false);//deshabilitando el que pueda mostrar cualquier archivo
+        chooser.addChoosableFileFilter(new FileNameExtensionFilter("MP3 Audio", "mp3"));//especificando tipo de archivo a aceptar y mostrar
         if (!path.equalsIgnoreCase("")) {
-            chooser.setCurrentDirectory(archivo.getParentFile());
+            chooser.setCurrentDirectory(archivo.getParentFile());//recordando el ultimo directorio visitado
         }
-        chooser.showOpenDialog(this);
+        chooser.showOpenDialog(this);//Mostrando JFileChooser
         try {
-            archivo = chooser.getSelectedFile();
-            path = archivo.getAbsolutePath();
-            Texa.setText(path);
+            archivo = chooser.getSelectedFile();//obteniendo archivo
+            path = archivo.getAbsolutePath();//obteniendo la ruta del archivo
+            Texa.setText(path);//mostrando ruta del archivo
         } catch (NullPointerException e) {
             System.out.println("No se selecciono un archivo. El archivo es " + e.getMessage());
         }
-        if (!path.equalsIgnoreCase("")) {
+        if (!path.equalsIgnoreCase("")) {//sino se selecciona un archivo. No se intentara extraer informacion de el.
             FileTagx ft = new FileTagx(path);
+            //obteniendo informacion del archivo y mostrando en los campos correspondientes.
             Tartista.setText(ft.getFileTags().getArtist());
             Ttitulo.setText(ft.getFileTags().getTitle());
             Tanime.setText("???");
@@ -196,6 +200,7 @@ public class EditTagx extends javax.swing.JFrame {
     }//GEN-LAST:event_BexaActionPerformed
 
     public void noMostrar(boolean valor) {
+        //deshabilita todos estos objetos en la ventana
         Tartista.setEnabled(valor);
         Ttitulo.setEnabled(valor);
         Tanime.setEnabled(valor);
@@ -205,7 +210,7 @@ public class EditTagx extends javax.swing.JFrame {
         lartista.setEnabled(valor);
         lcancion.setEnabled(valor);
         lanime.setEnabled(valor);
-        //ancho*alto
+        //ancho*alto. Cambia las dimensiones de la ventana.
         if (valor) {
             this.setSize(455, 365);
         } else {
