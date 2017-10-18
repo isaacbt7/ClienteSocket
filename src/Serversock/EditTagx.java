@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
@@ -68,7 +69,7 @@ public class EditTagx extends javax.swing.JFrame {
         getContentPane().add(lartista, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 144, 63, 27));
 
         lcancion.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lcancion.setText("Cancion: ");
+        lcancion.setText("Titulo: ");
         lcancion.setAutoscrolls(true);
         getContentPane().add(lcancion, new org.netbeans.lib.awtextra.AbsoluteConstraints(36, 189, 71, 27));
 
@@ -129,12 +130,30 @@ public class EditTagx extends javax.swing.JFrame {
     private void JguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JguardarActionPerformed
         // TODO add your handling code here:
         Mp3Object tags = new Mp3Object();
-        tags.setArtist(Tartista.getText().trim());
-        tags.setTitle(Ttitulo.getText().trim());
-        tags.setAnime(Tanime.getText().trim());
-        tags.setMp3Files(archivo);
-        FileTagx ft = new FileTagx();
-        ft.setFileTags(tags);
+        if(!Tartista.getText().trim().equalsIgnoreCase("")){
+            tags.setArtist(Tartista.getText().trim());
+        }else{
+            JOptionPane.showMessageDialog(null, "El campo Artista esta vacio","Aviso" ,JOptionPane.WARNING_MESSAGE);
+        }
+        if(!Ttitulo.getText().trim().equalsIgnoreCase("")){
+            tags.setTitle(Ttitulo.getText().trim());
+        }else{
+            JOptionPane.showMessageDialog(null, "El campo Titulo esta vacio","Aviso" ,JOptionPane.WARNING_MESSAGE);
+        }
+        
+        //si el campo anime tiene como valor ??? se manda vacio.
+        if(Tanime.getText().trim().equalsIgnoreCase("???")){
+            tags.setAnime("");
+        }else{    
+            tags.setAnime(Tanime.getText().trim());
+        }
+        
+        if(!Tartista.getText().trim().equalsIgnoreCase("")&&!Ttitulo.getText().trim().equalsIgnoreCase("")){
+             tags.setMp3Files(archivo);
+            FileTagx ft = new FileTagx();
+            ft.setFileTags(tags);
+        }
+       
     }//GEN-LAST:event_JguardarActionPerformed
 
     private void JborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JborrarActionPerformed
@@ -157,10 +176,9 @@ public class EditTagx extends javax.swing.JFrame {
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("MP3 Audio", "mp3"));
         chooser.setAcceptAllFileFilterUsed(false);
         if (!path.equalsIgnoreCase("")) {
-            System.out.println("parentpath " + new File(path).getParentFile());
             chooser.setCurrentDirectory(archivo.getParentFile());
         }
-     chooser.showOpenDialog(this);
+        chooser.showOpenDialog(this);
         try {
             archivo = chooser.getSelectedFile();
             path = archivo.getAbsolutePath();
@@ -175,7 +193,6 @@ public class EditTagx extends javax.swing.JFrame {
             Tanime.setText("???");
             noMostrar(true);
         }
-
     }//GEN-LAST:event_BexaActionPerformed
 
     public void noMostrar(boolean valor) {
