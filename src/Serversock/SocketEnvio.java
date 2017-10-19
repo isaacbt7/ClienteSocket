@@ -17,7 +17,6 @@ import java.util.logging.Logger;
  * @author Chack
  */
 public class SocketEnvio {
-    private FileOutputStream fileOut;
     private String host;
     private int puerto;
 
@@ -28,12 +27,12 @@ public class SocketEnvio {
  
     public void enviando(Mp3Object tagsObject){
         try {
-            Socket sock = new Socket(host, puerto);
-            ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());
-            out.writeObject(tagsObject);
-            out.flush();
-            out.close();
-            sock.close();
+            Socket sock = new Socket(host, puerto);//conectando con el servidor
+            ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());//creando objeto de tipo ObjectOutputStream y donde sera enviada 
+            out.writeObject(tagsObject);//enviando
+            out.flush();//limpiando ObjectOutputStream
+            out.close();//cerrando ObjectOutputStream
+            sock.close();//cerrando el socket
         } catch (IOException ex) {
             Logger.getLogger(SocketEnvio.class.getName()).log(Level.SEVERE, null, ex);
         }
