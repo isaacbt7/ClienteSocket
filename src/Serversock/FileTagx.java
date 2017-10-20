@@ -21,33 +21,40 @@ public class FileTagx {
     public FileTagx() {
     }
 
-    public FileTagx(String pathx) {
+    public FileTagx(String pathx) {//reciviendo ubicacion del archivo
         try {
-            System.out.println("path "+pathx);
-            mp3s = new MP3(pathx);
+            mp3s = new MP3(pathx);//creando un objeto de tipo mp3 con la libreria beaglebuddy
+            if (mp3s.hasErrors())
+         {
+             System.out.println("mp3");
+            mp3s.displayErrors(System.out);      // display the errors that were found
+         }
         } catch (IOException ex) {
-            Logger.getLogger(FileTagx.class.getName()).log(Level.SEVERE, null, ex);
+           // Logger.getLogger(FileTagx.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error, probablemente no hay metadata");
         }
 
     }
 
     public Mp3Object getFileTags() {
-        Mp3Object tagsObject = new Mp3Object();
+        Mp3Object tagsObject = new Mp3Object();//creando objeto de tipo Mp3Object y darle los siguientes valores.
         try {
             tagsObject.setArtist(mp3s.getID3v1Tag().getArtist());
-        } catch (NullPointerException e) {
+        }catch (NullPointerException e) {
+            System.out.println("error, seteando como vacio");
             tagsObject.setArtist("");
         }
         try {
             tagsObject.setTitle(mp3s.getID3v1Tag().getTitle());
         } catch (NullPointerException e) {
+            System.out.println("error, seteando como vacio");
             tagsObject.setTitle("");
         }
         return tagsObject;
     }
 
     public void setFileTags(Mp3Object tagsObject) {
-        //enviando del objeto por socket
+        //enviando el objeto por socket
        SocketEnvio se = new SocketEnvio("localhost", 5000);
        se.enviando(tagsObject);
 

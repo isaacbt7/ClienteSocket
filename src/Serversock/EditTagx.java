@@ -50,7 +50,7 @@ public class EditTagx extends javax.swing.JFrame {
         Tartista = new javax.swing.JTextField();
         Ttitulo = new javax.swing.JTextField();
         Tanime = new javax.swing.JTextField();
-        Jguardar = new javax.swing.JButton();
+        Jenviar = new javax.swing.JButton();
         Jborrar = new javax.swing.JButton();
         Texa = new javax.swing.JTextField();
         Bexa = new javax.swing.JButton();
@@ -95,15 +95,15 @@ public class EditTagx extends javax.swing.JFrame {
         Tanime.setToolTipText("Opcional");
         getContentPane().add(Tanime, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 237, 300, 27));
 
-        Jguardar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
-        Jguardar.setText("Guardar");
-        Jguardar.setAutoscrolls(true);
-        Jguardar.addActionListener(new java.awt.event.ActionListener() {
+        Jenviar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
+        Jenviar.setText("Enviar");
+        Jenviar.setAutoscrolls(true);
+        Jenviar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                JguardarActionPerformed(evt);
+                JenviarActionPerformed(evt);
             }
         });
-        getContentPane().add(Jguardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 282, -1, 27));
+        getContentPane().add(Jenviar, new org.netbeans.lib.awtextra.AbsoluteConstraints(135, 282, -1, 27));
 
         Jborrar.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         Jborrar.setText("Borrar");
@@ -129,7 +129,7 @@ public class EditTagx extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void JguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JguardarActionPerformed
+    private void JenviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JenviarActionPerformed
         // TODO add your handling code here:
         Mp3Object tags = new Mp3Object();
         //si el campo artista esta vacio se muestra un mensaje
@@ -144,7 +144,6 @@ public class EditTagx extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(null, "El campo Titulo esta vacio","Aviso" ,JOptionPane.WARNING_MESSAGE);
         }
-        
         //si el campo anime tiene como valor ??? se manda vacio.
         if(Tanime.getText().trim().equalsIgnoreCase("???")){
             tags.setAnime("");
@@ -156,9 +155,10 @@ public class EditTagx extends javax.swing.JFrame {
              tags.setMp3Files(archivo);
             FileTagx ft = new FileTagx();
             ft.setFileTags(tags);
+            JborrarActionPerformed(evt);
         }
        
-    }//GEN-LAST:event_JguardarActionPerformed
+    }//GEN-LAST:event_JenviarActionPerformed
 
     private void JborrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_JborrarActionPerformed
         // borra los siguientes campos y los deshabilita.
@@ -178,10 +178,10 @@ public class EditTagx extends javax.swing.JFrame {
         chooser = new JFileChooser();//creando objeto de tipo jFileChooser
         chooser.setAcceptAllFileFilterUsed(false);//deshabilitando el que pueda mostrar cualquier archivo
         chooser.addChoosableFileFilter(new FileNameExtensionFilter("MP3 Audio", "mp3"));//especificando tipo de archivo a aceptar y mostrar
-        if (!path.equalsIgnoreCase("")) {
-            chooser.setCurrentDirectory(archivo.getParentFile());//recordando el ultimo directorio visitado
+        if (!path.equals("")) {
+            chooser.setCurrentDirectory(new File(path).getParentFile());//recordando el ultimo directorio visitado
         }
-        chooser.showOpenDialog(this);//Mostrando JFileChooser
+        int yesno = chooser.showOpenDialog(this);//Mostrando JFileChooser
         try {
             archivo = chooser.getSelectedFile();//obteniendo archivo
             path = archivo.getAbsolutePath();//obteniendo la ruta del archivo
@@ -189,7 +189,7 @@ public class EditTagx extends javax.swing.JFrame {
         } catch (NullPointerException e) {
             System.out.println("No se selecciono un archivo. El archivo es " + e.getMessage());
         }
-        if (!path.equalsIgnoreCase("")) {//sino se selecciona un archivo. No se intentara extraer informacion de el.
+        if (yesno == 0) {//sino se selecciona un archivo. No se intentara extraer informacion de el.          
             FileTagx ft = new FileTagx(path);
             //obteniendo informacion del archivo y mostrando en los campos correspondientes.
             Tartista.setText(ft.getFileTags().getArtist());
@@ -204,7 +204,7 @@ public class EditTagx extends javax.swing.JFrame {
         Tartista.setEnabled(valor);
         Ttitulo.setEnabled(valor);
         Tanime.setEnabled(valor);
-        Jguardar.setEnabled(valor);
+        Jenviar.setEnabled(valor);
         Jborrar.setEnabled(valor);
         lrellenar.setEnabled(valor);
         lartista.setEnabled(valor);
@@ -257,7 +257,7 @@ public class EditTagx extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton Bexa;
     private javax.swing.JButton Jborrar;
-    private javax.swing.JButton Jguardar;
+    private javax.swing.JButton Jenviar;
     private javax.swing.JTextField Tanime;
     private javax.swing.JTextField Tartista;
     private javax.swing.JTextField Texa;
