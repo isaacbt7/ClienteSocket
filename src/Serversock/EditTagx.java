@@ -7,6 +7,7 @@ package Serversock;
 
 import java.io.File;
 import Serversock.Mp3Object;
+import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,11 +85,6 @@ public class EditTagx extends javax.swing.JFrame {
         getContentPane().add(Tartista, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 144, 300, 27));
 
         Ttitulo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        Ttitulo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TtituloActionPerformed(evt);
-            }
-        });
         getContentPane().add(Ttitulo, new org.netbeans.lib.awtextra.AbsoluteConstraints(119, 189, 300, 27));
 
         Tanime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -168,10 +164,6 @@ public class EditTagx extends javax.swing.JFrame {
         Texa.setText("");
         noMostrar(false);
     }//GEN-LAST:event_JborrarActionPerformed
-
-    private void TtituloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TtituloActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_TtituloActionPerformed
 
     private void BexaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BexaActionPerformed
         JFileChooser chooser = null;//creando variable de tipo JfileChooser
