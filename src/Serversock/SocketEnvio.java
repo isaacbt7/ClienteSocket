@@ -27,6 +27,7 @@ public class SocketEnvio {
  
     public void enviando(Mp3Object tagsObject){
         try {
+            System.out.println("envio "+host+" "+puerto);
             Socket sock = new Socket(host, puerto);//conectando con el servidor
             ObjectOutputStream out = new ObjectOutputStream(sock.getOutputStream());//creando objeto de tipo ObjectOutputStream y donde sera enviada 
             out.writeObject(tagsObject);//enviando

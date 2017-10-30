@@ -27,7 +27,7 @@ public class FileTagx {
             if (mp3s.hasErrors())
          {
              System.out.println("mp3");
-            mp3s.displayErrors(System.out);      // display the errors that were found
+            mp3s.displayErrors(System.out);// display the errors that were found
          }
         } catch (IOException ex) {
            // Logger.getLogger(FileTagx.class.getName()).log(Level.SEVERE, null, ex);
